@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProjectPitch4</name>
+    </assembly>
+    <members>
+        <member name="T:ProjectPitch4.Controllers.HttpController">
+            <summary>
+            Controller for making HTTP requests.
+            </summary>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.HttpController.#ctor(ProjectPitch4.Services.HttpServer,Microsoft.Extensions.Options.IOptions{ProjectPitch4.Models.AppConfig})">
+            <summary>
+            Initializes a new instance of the <see cref="T:ProjectPitch4.Controllers.HttpController"/> class.
+            </summary>
+            <param name="httpServer">The HTTP server service.</param>
+            <param name="config">The application configuration options.</param>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.HttpController.GetAsync">
+            <summary>
+            Sends an HTTP GET request to Google.
+            </summary>
+            <returns>
+            A task representing the asynchronous operation, returning the response string.
+            </returns>
+        </member>
+        <member name="T:ProjectPitch4.Controllers.Product">
+            <summary>
+            Controller for managing products.
+            </summary>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.Product.#ctor(Microsoft.Extensions.Logging.ILogger{ProjectPitch4.Controllers.Product},ProjectPitch4.Services.MongoService)">
+            <summary>
+            Constructor for the Product controller.
+            </summary>
+            <param name="logger">The logger instance.</param>
+            <param name="context">The MongoService context.</param>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.Product.Get(System.Int32)">
+            <summary>
+            Gets a paginated list of products.
+            </summary>
+            <remarks>
+            pageNumber : Starts from 1 and each page contains 50 records
+            </remarks>
+            <param name="pageNumber">The page number.</param>
+            <returns>An IEnumerable of ProductDescription.</returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.Product.GetByProductID(System.Int32)">
+            <summary>
+            Retrieves product descriptions by product ID.
+            </summary>
+            <remarks>
+            This method retrieves a list of product descriptions that match the specified product ID.
+            </remarks>
+            <param name="productID">The ID of the product to retrieve.</param>
+            <returns>An IEnumerable of ProductDescription matching the provided product ID.</returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.Product.Post(ProjectPitch4.Models.ProductDescription_Base)">
+            <summary>
+            Adds a new product.
+            </summary>
+            <remarks>
+            This method adds a new product to the database if the product does not already exist.
+            If a product with the same ID already exists, it returns an error message indicating that the product already exists.
+            </remarks>
+            <param name="payload">The product data to add.</param>
+            <returns>
+            IActionResult representing the result of the operation.
+            - If the product is successfully added, returns an Ok result with a custom response object containing a success message and the added product.
+            - If the product already exists, returns a BadRequest result with an error message indicating that the product already exists.
+            </returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.Product.Update(System.String,ProjectPitch4.Models.ProductDescription_Base)">
+            <summary>
+            Updates an existing product.
+            </summary>
+            <remarks>
+            This method updates the fields of an existing product in the database with the provided product ID.
+            If the provided ID is invalid, it returns a BadRequest result with an error message indicating an invalid ID format.
+            If the product with the provided ID is not found, it returns a NotFound result with an error message indicating that the product was not found.
+            If the product is successfully updated, it returns an Ok result with a success message indicating that the product was successfully updated.
+            </remarks>
+            <param name="id">The ID of the product to update.</param>
+            <param name="updatedProduct">The updated product data.</param>
+            <returns>
+            IActionResult representing the result of the operation.
+            - If the ID format is invalid, returns a BadRequest result with an error message.
+            - If the product is not found, returns a NotFound result with an error message.
+            - If the product is successfully updated, returns an Ok result with a success message.
+            </returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.Product.Delete(System.String)">
+            <summary>
+            Deletes a product using Id.
+            </summary>
+            <remarks>
+            This method deletes a product from the database based on the provided ID.
+            If the product with the provided Id is found and successfully deleted, it returns an Ok result with a success message.
+            If the product with the provided Id is not found or not deleted, it returns a NotFound result with an error message.
+            ID is the generated string of the product.
+            </remarks>
+            <param name="id">The ID of the product to delete.</param>
+            <returns>
+            IActionResult representing the result of the operation.
+            - If the product is successfully deleted, returns an Ok result with a success message.
+            - If the product is not found or not deleted, returns a NotFound result with an error message.
+            </returns>
+        </member>
+        <member name="T:ProjectPitch4.Controllers.QuizController">
+            <summary>
+            Controller for managing quiz questions.
+            </summary>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.QuizController.#ctor(ProjectPitch4.models.MySqlContext)">
+            <summary>
+            Constructor initializing the MySQL context.
+            </summary>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.QuizController.Get">
+            <summary>
+            Retrieves all quiz questions.
+            </summary>
+            <remarks>Returns a list of all quiz questions.</remarks>
+            <returns>All quiz questions.</returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.QuizController.Get(System.Int32)">
+            <summary>
+            Retrieves a specific quiz question by ID.
+            </summary>
+            <remarks>Returns the quiz question with the specified ID.</remarks>
+            <param name="id">The ID of the quiz question to retrieve.</param>
+            <returns>The quiz question with the specified ID.</returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.QuizController.Post(ProjectPitch4.models.CcquizQuestion)">
+            <summary>
+            Adds a new quiz question.
+            </summary>
+            <remarks>Adds a new quiz question to the database.</remarks>
+            <param name="value">The quiz question to add.</param>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.QuizController.Put(System.Int32,ProjectPitch4.models.CcquizQuestion)">
+            <summary>
+            Updates an existing quiz question.
+            </summary>
+            <remarks>Updates an existing quiz question in the database.</remarks>
+            <param name="id">The ID of the quiz question to update.</param>
+            <param name="value">The updated quiz question.</param>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.QuizController.Delete(System.Int32)">
+            <summary>
+            Deletes a quiz question by ID.
+            </summary>
+            <remarks>Deletes a quiz question from the database by its ID.</remarks>
+            <param name="id">The ID of the quiz question to delete.</param>
+        </member>
+        <member name="T:ProjectPitch4.Controllers.RegionController">
+            <summary>
+            Controller for managing regions.
+            </summary>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.RegionController.#ctor(Microsoft.Extensions.Logging.ILogger{ProjectPitch4.Controllers.RegionController},ProjectPitch4.Services.MongoService)">
+            <summary>
+            Constructor for the RegionController class.
+            </summary>
+            <param name="logger">The logger instance.</param>
+            <param name="context">The MongoService context.</param>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.RegionController.Get(System.Int32)">
+            <summary>
+            Retrieves a paginated list of regions.
+            </summary>
+            <remarks>
+            This method retrieves a paginated list of regions from the database.
+            The page size is fixed at 50 records per page.
+            </remarks>
+            <param name="pageNumber">The page number to retrieve. Default is 1.</param>
+            <returns>
+            An IEnumerable of Region objects representing the paginated list of regions.
+            </returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.RegionController.Get(System.String)">
+            <summary>
+            Retrieves a region using Id.
+            </summary>
+            <remarks>
+            This method retrieves a region from the database based on the provided ID.
+            </remarks>
+            <param name="id">The ID of the region to retrieve.</param>
+            <returns>
+            A Region object representing the region with the provided ID.
+            If no region is found with the provided ID, returns null.
+            </returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.RegionController.GetByProvinceCode(System.String)">
+            <summary>
+            Retrieves regions using state province code.
+            </summary>
+            <remarks>
+            This method retrieves regions from the database based on the provided state/province code.
+            </remarks>
+            <param name="stateProvinceCode">The state/province code to filter regions by.</param>
+            <returns>
+            An IEnumerable of Region objects representing the regions with the provided state/province code.
+            </returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.RegionController.Post(ProjectPitch4.Models.Region_Base)">
+            <summary>
+            Adds a new region
+            </summary>
+            <remarks>
+            This method adds a new region to the database based on the provided region information.
+            </remarks>
+            <param name="payload">The payload containing the information of the region to be added.</param>
+            <returns>
+            An IActionResult representing the outcome of the operation.
+            </returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.RegionController.Update(System.String,ProjectPitch4.Models.Region_Base)">
+            <summary>
+            Updates an existing region
+            </summary>
+            <remarks>
+            This method updates an existing region in the database based on the provided region ID and updated region information.
+            </remarks>
+            <param name="id">The ID of the region to be updated.</param>
+            <param name="updatedRegion">The updated information of the region.</param>
+            <returns>
+            An IActionResult representing the outcome of the operation.
+            </returns>
+        </member>
+        <member name="M:ProjectPitch4.Controllers.RegionController.Delete(System.String)">
+            <summary>
+            Deletes Region
+            </summary>
+            <remarks>
+            This method deletes a region from the database based on the provided region ID.
+            </remarks>
+            <param name="id">The ID of the region to be deleted.</param>
+            <returns>
+            An IActionResult representing the outcome of the operation.
+            </returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,415 @@
+---
+openapi: "3.0.1"
+info: 
+  title: "ALXPortfolioProject"
+  version: "v1"
+paths: 
+  /api/Http/GetGoogle: 
+    get: 
+      tags: 
+      - "Http"
+      summary: "Sends an HTTP GET request to Google."
+      responses: 
+        200: 
+          description: "Success"
+          content: 
+            text/plain: 
+              schema: 
+                type: "string"
+            application/json: 
+              schema: 
+                type: "string"
+            text/json: 
+              schema: 
+                type: "string"
+  /Product/ProductList: 
+    get: 
+      tags: 
+      - "Product"
+      summary: "Gets a paginated list of products."
+      description: "pageNumber : Starts from 1 and each page contains 50 records"
+      parameters: 
+      - name: "pageNumber"
+        in: "query"
+        description: "The page number."
+        schema: 
+          type: "integer"
+          format: "int32"
+          default: "1"
+      responses: 
+        200: 
+          description: "Success"
+          content: 
+            text/plain: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/ProductDescription"
+            application/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/ProductDescription"
+            text/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/ProductDescription"
+  /Product/GetByProductID/{productID}: 
+    get: 
+      tags: 
+      - "Product"
+      summary: "Retrieves product descriptions by product ID."
+      description: "This method retrieves a list of product descriptions that match the specified product ID."
+      parameters: 
+      - name: "productID"
+        in: "path"
+        description: "The ID of the product to retrieve."
+        required: "true"
+        schema: 
+          type: "integer"
+          format: "int32"
+      responses: 
+        200: 
+          description: "Success"
+          content: 
+            text/plain: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/ProductDescription"
+            application/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/ProductDescription"
+            text/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/ProductDescription"
+  /Product/AddProduct: 
+    post: 
+      tags: 
+      - "Product"
+      summary: "Adds a new product."
+      description: "This method adds a new product to the database if the product does not already exist.
+If a product with the same ID already exists, it returns an error message indicating that the product already exists."
+      requestBody: 
+        description: "The product data to add."
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/ProductDescription_Base"
+          text/json: 
+            schema: 
+              $ref: "#/components/schemas/ProductDescription_Base"
+          application/*+json: 
+            schema: 
+              $ref: "#/components/schemas/ProductDescription_Base"
+      responses: 
+        200: 
+          description: "Success"
+  /Product/UpdateProduct/{id}: 
+    put: 
+      tags: 
+      - "Product"
+      summary: "Updates an existing product."
+      description: "This method updates the fields of an existing product in the database with the provided product ID.
+If the provided ID is invalid, it returns a BadRequest result with an error message indicating an invalid ID format.
+If the product with the provided ID is not found, it returns a NotFound result with an error message indicating that the product was not found.
+If the product is successfully updated, it returns an Ok result with a success message indicating that the product was successfully updated."
+      parameters: 
+      - name: "id"
+        in: "path"
+        description: "The ID of the product to update."
+        required: "true"
+        schema: 
+          type: "string"
+      requestBody: 
+        description: "The updated product data."
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/ProductDescription_Base"
+          text/json: 
+            schema: 
+              $ref: "#/components/schemas/ProductDescription_Base"
+          application/*+json: 
+            schema: 
+              $ref: "#/components/schemas/ProductDescription_Base"
+      responses: 
+        200: 
+          description: "Success"
+  /Product/DeleteProduct/{id}: 
+    delete: 
+      tags: 
+      - "Product"
+      summary: "Deletes a product using Id."
+      description: "This method deletes a product from the database based on the provided ID.
+If the product with the provided Id is found and successfully deleted, it returns an Ok result with a success message.
+If the product with the provided Id is not found or not deleted, it returns a NotFound result with an error message.
+ID is the generated string of the product."
+      parameters: 
+      - name: "id"
+        in: "path"
+        description: "The ID of the product to delete."
+        required: "true"
+        schema: 
+          type: "string"
+      responses: 
+        200: 
+          description: "Success"
+  /Region/RegionList: 
+    get: 
+      tags: 
+      - "Region"
+      summary: "Retrieves a paginated list of regions."
+      description: "This method retrieves a paginated list of regions from the database.
+The page size is fixed at 50 records per page."
+      parameters: 
+      - name: "pageNumber"
+        in: "query"
+        description: "The page number to retrieve. Default is 1."
+        schema: 
+          type: "integer"
+          format: "int32"
+          default: "1"
+      responses: 
+        200: 
+          description: "Success"
+          content: 
+            text/plain: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/Region"
+            application/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/Region"
+            text/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/Region"
+  /Region/GetRegion/{id}: 
+    get: 
+      tags: 
+      - "Region"
+      summary: "Retrieves a region using Id."
+      description: "This method retrieves a region from the database based on the provided ID."
+      parameters: 
+      - name: "id"
+        in: "path"
+        description: "The ID of the region to retrieve."
+        required: "true"
+        schema: 
+          type: "string"
+      responses: 
+        200: 
+          description: "Success"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/Region"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/Region"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/Region"
+  /Region/GetByProvinceCode/{stateProvinceCode}: 
+    get: 
+      tags: 
+      - "Region"
+      summary: "Retrieves regions using state province code."
+      description: "This method retrieves regions from the database based on the provided state/province code."
+      parameters: 
+      - name: "stateProvinceCode"
+        in: "path"
+        description: "The state/province code to filter regions by."
+        required: "true"
+        schema: 
+          type: "string"
+      responses: 
+        200: 
+          description: "Success"
+          content: 
+            text/plain: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/Region"
+            application/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/Region"
+            text/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/Region"
+  /Region/AddRegion: 
+    post: 
+      tags: 
+      - "Region"
+      summary: "Adds a new region"
+      description: "This method adds a new region to the database based on the provided region information."
+      requestBody: 
+        description: "The payload containing the information of the region to be added."
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/Region_Base"
+          text/json: 
+            schema: 
+              $ref: "#/components/schemas/Region_Base"
+          application/*+json: 
+            schema: 
+              $ref: "#/components/schemas/Region_Base"
+      responses: 
+        200: 
+          description: "Success"
+  /Region/UpdateRegion/{id}: 
+    put: 
+      tags: 
+      - "Region"
+      summary: "Updates an existing region"
+      description: "This method updates an existing region in the database based on the provided region ID and updated region information."
+      parameters: 
+      - name: "id"
+        in: "path"
+        description: "The ID of the region to be updated."
+        required: "true"
+        schema: 
+          type: "string"
+      requestBody: 
+        description: "The updated information of the region."
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/Region_Base"
+          text/json: 
+            schema: 
+              $ref: "#/components/schemas/Region_Base"
+          application/*+json: 
+            schema: 
+              $ref: "#/components/schemas/Region_Base"
+      responses: 
+        200: 
+          description: "Success"
+  /Region/DeleteRegion/{id}: 
+    delete: 
+      tags: 
+      - "Region"
+      summary: "Deletes Region"
+      description: "This method deletes a region from the database based on the provided region ID."
+      parameters: 
+      - name: "id"
+        in: "path"
+        description: "The ID of the region to be deleted."
+        required: "true"
+        schema: 
+          type: "string"
+      responses: 
+        200: 
+          description: "Success"
+components: 
+  schemas: 
+    ProductDescription: 
+      type: "object"
+      properties: 
+        productID: 
+          type: "integer"
+          format: "int32"
+        name: 
+          type: "string"
+          nullable: "true"
+        productModel: 
+          type: "string"
+          nullable: "true"
+        cultureID: 
+          type: "string"
+          nullable: "true"
+        description: 
+          type: "string"
+          nullable: "true"
+        _id: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    ProductDescription_Base: 
+      type: "object"
+      properties: 
+        productID: 
+          type: "integer"
+          format: "int32"
+        name: 
+          type: "string"
+          nullable: "true"
+        productModel: 
+          type: "string"
+          nullable: "true"
+        cultureID: 
+          type: "string"
+          nullable: "true"
+        description: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    Region: 
+      type: "object"
+      properties: 
+        stateProvinceID: 
+          type: "integer"
+          format: "int32"
+        stateProvinceCode: 
+          type: "string"
+          nullable: "true"
+        isOnlyStateProvinceFlag: 
+          type: "integer"
+          format: "int32"
+        stateProvinceName: 
+          type: "string"
+          nullable: "true"
+        territoryID: 
+          type: "integer"
+          format: "int32"
+        countryRegionCode: 
+          type: "string"
+          nullable: "true"
+        countryRegionName: 
+          type: "string"
+          nullable: "true"
+        _id: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    Region_Base: 
+      type: "object"
+      properties: 
+        stateProvinceID: 
+          type: "integer"
+          format: "int32"
+        stateProvinceCode: 
+          type: "string"
+          nullable: "true"
+        isOnlyStateProvinceFlag: 
+          type: "integer"
+          format: "int32"
+        stateProvinceName: 
+          type: "string"
+          nullable: "true"
+        territoryID: 
+          type: "integer"
+          format: "int32"
+        countryRegionCode: 
+          type: "string"
+          nullable: "true"
+        countryRegionName: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
